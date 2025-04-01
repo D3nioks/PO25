@@ -1,107 +1,121 @@
-﻿﻿// kalkulator.cpp : Ten plik zawiera funkcję „main”. W nim rozpoczyna się i kończy wykonywanie programu.
-//
-
-#include <iostream>
+﻿#include <iostream>
 #include <cmath>
 
+class Kalkulator {
+private:
+    double ram;   
+    bool first;   
 
-double dodawanie(double a,double b) {
-    double wynik = a + b;
-    std::cout << wynik;
-    return wynik;
-}
-double odejmowanie(double a, double b) {
-    double wynik = a - b;
-    std::cout << wynik;
-    return wynik;
-}
-double mnożnie mnożenie(double a, double b) {
-    double wynik = a * b;
-    std::cout << wynik;
-    return wynik;
-}
-double dzielenie(double a, double b) {
-    if (b != 0) {
-        double wynik = a + b;
-        std::cout << wynik;
-        return wynik;
-    }
-    else {
-        std::cout << "ERR";
-    }
-}
-double modulo(double a, double b) {
-    if (b != 0) {
-        std::cout << static_cast<int>(a) % static_cast<int>(b) << std::endl;
-        ram = static_cast<int>(a) % static_cast<int>(b);
-        std::cout << ram;
+public:
+    Kalkulator() : ram(0), first(false) {}
+
+    double dodawanie(double a, double b) {
         first = true;
+        ram = a + b;
+        return ram;
+    }
+
+    double odejmowanie(double a, double b) {
+        first = true;
+        ram = a - b;
+        return ram;
+    }
+
+    double mnożenie(double a, double b) {
+        first = true;
+        ram = a * b;
+        return ram;
+    }
+
+    double dzielenie(double a, double b) {
+        if (b != 0) {
+            first = true;
+            ram = a / b;
+            return ram;
+        }
+        else {
+            std::cout << "ERR: Division by zero!" << std::endl;
+            return 0;
+        }
+    }
+
+    double modulo(double a, double b) {
+        if (b != 0) {
+            first = true;
+            ram = static_cast<int>(a) % static_cast<int>(b);
+            return ram;
+        }
+        else {
+            std::cout << "ERR: Division by zero!" << std::endl;
+            return 0;
+        }
+    }
+
+    void erase() {
+        ram = 0;
+        first = false;
+    }
+
+    void kalkulator() {
+        double a = 0, b = 0;
+        int c;
+
+        if (first == true) {
+            a = ram;
+            std::cout << "Podaj liczbe b: ";
+            std::cin >> b;
+        }
+        else {
+            std::cout << "Podaj liczbe a: ";
+            std::cin >> a;
+            std::cout << "Podaj liczbe b: ";
+            std::cin >> b;
+        }
+
+        std::cout << "1. Dodawanie\n";
+        std::cout << "2. Odejmowanie\n";
+        std::cout << "3. Mnożenie\n";
+        std::cout << "4. Dzielenie\n";
+        std::cout << "5. Modulo\n";
+        std::cout << "6. Zakończ\n";
+        std::cout << "7. Wyczyść\n";
+
+        std::cout << "Wybierz opcję: ";
+        std::cin >> c;
+
+        switch (c) {
+        case 1:
+            std::cout << "Wynik dodawania: " << dodawanie(a, b) << std::endl;
+            break;
+        case 2:
+            std::cout << "Wynik odejmowania: " << odejmowanie(a, b) << std::endl;
+            break;
+        case 3:
+            std::cout << "Wynik mnożenia: " << mnożenie(a, b) << std::endl;
+            break;
+        case 4:
+            std::cout << "Wynik dzielenia: " << dzielenie(a, b) << std::endl;
+            break;
+        case 5:
+            std::cout << "Wynik modulo: " << modulo(a, b) << std::endl;
+            break;
+        case 6:
+            std::cout << "Koniec programu.\n";
+            return;
+        case 7:
+            erase();
+            std::cout << "Wartości zostały wyczyszczone.\n";
+            break;
+        default:
+            std::cout << "Niepoprawna opcja.\n";
+        }
+
         kalkulator();
-    }
-    else if (b == 0) {
-        std::cout << "ERR";
-    }
-}
-double eraseram(double a, double b) {
-    double wynik =0;
-    return wynik;
-}
+    };
+};
 
-
-bool first = false;
-double ram = 0;
-
-
-double kalkulator()
-{
-    double a = 0;
-    double b = 0;
-    int c;
-    if (first == true) {
-        a = ram;
-        std::cout << "podaj liczbe b" << std::endl;
-        std::cin >> b;
-    }
-    else if (first == false) {
-        std::cout << "podaj liczbe a" << std::endl;
-        std::cin >> a;
-        std::cout << "podaj liczbe b" << std::endl;
-        std::cin >> b;
-    }
-    std::cout << "1 dodawanie" << std::endl;
-    std::cout << " 2 odejmowanie " << std::endl;
-    std::cout << "3 mnozenie " << std::endl;
-    std::cout << "4 dzielenie " << std::endl;
-    std::cout << "6 erase" << std::endl;
-    std::cout << "7 exit" << std::endl;
-    std::cin >> c;
-
-    switch (c) {
-    case 1:
-        dodawanie(a, b);
-        std::cout << dodawanie(a, b) << std::endl;
-        break;
-    case 2:
-        odejmowanie(a, b);
-        std::cout << odejmowanie(a, b) << std::endl;
-        break;
-    case 3:
-        mnożenie(a, b);
-        break;
-    case 4:
-        dzielenie(a, b);
-        break;
-    case 5:
-        modulo(a, b);
-        break;
-    case 6:
-        eraseram(a, b);
-        break;
-
-    }
-
-
-int main()
-{
-    kalkulator();
+int main() {
+    Kalkulator calc; 
+    calc.kalkulator();
+    return 0;
 }
