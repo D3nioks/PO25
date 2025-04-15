@@ -1,1 +1,2 @@
-# PO25
+- **Tytuł**: Kalkulator.
+- **Opis**: Co robi projekt? Jakie funkcje oferuje?
