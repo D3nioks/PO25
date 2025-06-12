@@ -1,130 +1,92 @@
-# Aplikacja Alarm i Minutnik w Qt
-
----
+# ⏰ Aplikacja Alarm i Minutnik w Qt
 
 ## 1. Opis projektu
 
-Aplikacja umożliwia użytkownikowi ustawianie alarmów na określony czas oraz korzystanie z minutnika (countdown timer). Interfejs pozwala na:
-
-- Wyświetlanie aktualnego czasu (zegara).
-- Dodawanie i usuwanie alarmów.
-- Uruchamianie, pauzowanie i resetowanie minutnika.
-- Powiadamianie użytkownika komunikatami o alarmach i zakończeniu minutnika.
+Aplikacja umożliwia użytkownikowi ustawianie alarmów na określoną datę i godzinę oraz korzystanie z minutnika (countdown timer). Dodatkowo umożliwia dynamiczną zmianę stylu zegara oraz koloru tła aplikacji. Zbudowana z wykorzystaniem biblioteki Qt.
 
 ---
 
-## 2. Założenia funkcjonalne
+## 2. Funkcje
 
-- Wyświetlanie aktualnego czasu w formacie HH:mm:ss.
-- Możliwość ustawienia alarmu na przyszły czas i datę.
-- Lista aktywnych alarmów wyświetlana w interfejsie.
-- Powiadomienie użytkownika o wybranym alarmie.
-- Minutnik odliczający zadany czas w sekundach.
-- Sterowanie minutnikiem: start, pauza, reset.
-- Komunikaty informujące o zakończeniu minutnika i alarmu.
-
----
-
-## 3. Założenia niefunkcjonalne
-
-- Aplikacja ma intuicyjny i prosty interfejs.
-- Działa płynnie i stabilnie.
-- Wykorzystuje mechanizmy Qt do zarządzania czasem (QTimer).
-- Kod napisany z zasadami programowania obiektowego.
-- Zoptymalizowany pod kątem działania na systemach Windows i Linux.
+- ✅ Wyświetlanie aktualnego czasu (zegara) w formacie `HH:mm:ss`.
+- 🕒 Dodawanie i usuwanie alarmów.
+- ⏳ Minutnik: odliczanie zadanej liczby sekund, z opcjami **start**, **pauza/wznów** i **reset**.
+- 🔔 Powiadomienia o alarmach i zakończeniu minutnika.
+- 🎨 **Zmiana koloru i stylu zegara** (czcionka, kolor, pogrubienie, kursywa).
+- 🖼️ **Przycisk zmieniający tło** aplikacji cyklicznie (4 kolory).
 
 ---
 
-## 4. Wymagania sprzętowe i środowiskowe
+## 3. Wymagania
 
-- System operacyjny: Windows 7 lub nowszy, Linux (Ubuntu, Fedora).
-- Qt Framework wersja 5.12 lub nowsza.
-- Kompilator C++ zgodny ze standardem C++11 lub wyższym.
-- Minimum 100 MB wolnego miejsca na dysku.
-- Minimum 1 GB RAM (zalecane 2 GB).
-
----
-
-## 5. Struktura projektu
-
-- `mainwindow.h` — deklaracje klasy MainWindow, jej metod i atrybutów.
-- `mainwindow.cpp` — definicje funkcji klasy MainWindow, implementacja logiki aplikacji.
-- `mainwindow.ui` — plik XML opisujący interfejs graficzny (stworzony w Qt Designer).
-- `main.cpp` — punkt startowy aplikacji.
-- `resources.qrc` (opcjonalnie) — zasoby graficzne i inne.
+- **System operacyjny:** Windows 7 lub nowszy / Linux (Ubuntu/Fedora).
+- **Qt:** Qt 5.12 lub nowszy.
+- **Kompilator:** Zgodny z C++11 lub wyżej.
+- **RAM:** min. 1 GB (zalecane 2 GB).
+- **Miejsce na dysku:** 100 MB.
 
 ---
 
-## 6. Opis klas i metod
+## 4. Struktura projektu
 
-### Klasa MainWindow
-
-Reprezentuje główne okno aplikacji, zarządza interfejsem i logiką.
-
-**Atrybuty:**
-
-- `QTimer *clockTimer` — timer aktualizujący zegar co sekundę.
-- `QTimer *countdownTimer` — timer minutnika odliczający czas.
-- `QList<QDateTime> alarms` — lista ustawionych alarmów.
-- `int countdownSeconds` — pozostały czas minutnika w sekundach.
-- `bool countdownRunning` — flaga stanu minutnika.
-
-**Metody:**
-
-- `updateClock()` — aktualizuje etykietę zegara i sprawdza alarmy.
-- `setAlarm()` — dodaje alarm do listy, jeśli nie jest w przeszłości.
-- `deleteSelectedAlarm()` — usuwa wybrany alarm z listy.
-- `checkAlarms()` — sprawdza, czy któryś alarm jest już do wywołania.
-- `startCountdown()` — uruchamia minutnik na zadany czas.
-- `toggleCountdown()` — wstrzymuje/wznawia minutnik.
-- `resetCountdown()` — zeruje minutnik.
-- `updateCountdown()` — wywoływana co sekundę, aktualizuje odliczanie.
-- `updateCountdownDisplay()` — wyświetla czas minutnika w formacie mm:ss.
+- `mainwindow.h` – deklaracja klasy i slotów.
+- `mainwindow.cpp` – logika aplikacji i implementacja funkcji.
+- `mainwindow.ui` – interfejs graficzny stworzony w Qt Designer.
+- `main.cpp` – punkt startowy aplikacji.
+- `alarmevent.h/.cpp` – klasa reprezentująca pojedynczy alarm.
+- `resources.qrc` – (opcjonalnie) zasoby graficzne.
 
 ---
 
-## 7. Instrukcja obsługi
+## 5. Instrukcja obsługi
 
-### Ustawienie alarmu
+### ⏰ Ustawienie alarmu lub minutnika (`Set`)
+- Jeśli ustawiona jest **data i godzina**, kliknięcie `Set` ustawia **alarm**.
+- Jeśli wpisana jest **liczba sekund** (i brak daty/godziny), `Set` uruchamia **minutnik**.
 
-1. Wybierz datę i godzinę alarmu za pomocą widgetów `QDateEdit` i `QTimeEdit`.
-2. Kliknij przycisk „Ustaw alarm”.
-3. Alarm pojawi się na liście aktywnych alarmów.
+### 🗑️ Usuwanie alarmu (`Delete`)
+- Zaznacz alarm z listy.
+- Kliknij `Delete`, aby go usunąć.
 
-### Usuwanie alarmu
+### 🎨 Zmiana stylu zegara (`Style`)
+- Kliknij `Style`, aby zmienić wygląd zegara (czcionka, kolor).
+- Styl zmienia się cyklicznie – **10 różnych wariantów**, potem wraca do pierwszego.
 
-1. Zaznacz alarm na liście.
-2. Kliknij przycisk „Usuń alarm”.
+### 🖼️ Zmiana koloru tła (`Background`)
+- Kliknięcie zmienia kolor tła cyklicznie:
+  - Szary (`#808080`)
+  - Ciemnoniebieski (`#001F3F`)
+  - Pomarańczowy (`#FF851B`)
+  - Brązowy (`#8B4513`)
 
-### Minutnik
-
-- **Start:** wpisz liczbę sekund w polu i kliknij „Start minutnika”.
-- **Pauza/Wznów:** kliknij przycisk „Pauza” lub „Wznów” w zależności od stanu minutnika.
-- **Reset:** kliknij „Reset minutnika”, aby zatrzymać i wyzerować odliczanie.
-
----
-
-## 8. Programowanie obiektowe w projekcie
-
-- **Klasy i obiekty:** Główna klasa `MainWindow` dziedziczy po `QMainWindow`, instancje klas `QTimer`, `QDateTime` oraz kontenery Qt.
-- **Hermetyzacja:** Pola prywatne (np. `countdownSeconds`, `countdownRunning`) i publiczne sloty do interakcji z UI.
-- **Konstruktory i destruktory:** Konstruktor inicjuje UI i timery; destruktor zwalnia pamięć.
-- **Polimorfizm i dziedziczenie:** `MainWindow` rozszerza funkcjonalność `QMainWindow`.
-- **Operator przeciążony:** Nie występuje bezpośrednio, ale można dodać, np. dla porównań alarmów.
-- **Przyjaźń:** Nie zastosowano, ale można rozważyć dla zaawansowanych rozwiązań.
+### 🔁 Reset minutnika (`Reset`)
+- Zatrzymuje minutnik i ustawia `00:00`.
 
 ---
 
-## 9. Możliwe rozszerzenia
+## 6. Programowanie obiektowe
 
-- Dodanie możliwości ustawiania dźwięku alarmu.
-- Zapisywanie alarmów do pliku i wczytywanie przy starcie.
-- Obsługa wielojęzyczności (internationalization).
-- Ulepszony interfejs z ikonami i animacjami.
-- Obsługa powtarzających się alarmów.
+- **Klasa `MainWindow`** dziedziczy po `QMainWindow`.
+- **Hermetyzacja** – pola prywatne, publiczne sloty.
+- **Konstruktory i destruktory** – inicjalizacja, czyszczenie alarmów.
+- **Polimorfizm** – przez dziedziczenie po klasach Qt.
+- **Dodatkowe klasy**: np. `AlarmEvent`.
 
 ---
 
-## Autor
+## 7. Pomysły na rozwój
 
-Wojciech Benkiewicz 287118
+- 🔉 Obsługa dźwięku przy alarmie.
+- 💾 Zapisywanie alarmów do pliku i wczytywanie po uruchomieniu.
+- 🌍 Wersje wielojęzyczne (i18n).
+- 🎨 Nowoczesny interfejs z ikonami i animacjami.
+- 🔁 Obsługa alarmów cyklicznych.
+
+---
+
+## 👨‍💻 Autor
+
+Wojciech Benkiewicz  
+Nr indeksu: 287118  
+Politechnika Wrocławska
+Rok: 2025
